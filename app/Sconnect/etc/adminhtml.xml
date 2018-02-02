@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sforsoftware translate="title" module="sforsoftware_sconnect">
+                                        <title>SforSoftware - alle instellingen</title>
+                                    </sforsoftware>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
