@@ -235,28 +235,29 @@
         }
 
         private function _addShippingCosts($_order) {
-            if ($_order->getShippingAmount() > 0) {
-                $_shippingTaxClassId = Mage::getStoreConfig('tax/classes/shipping_tax_class');
+        if ($_order->getShippingAmount() > 0) {
+            $_shippingTaxClassId = Mage::getStoreConfig('tax/classes/shipping_tax_class');
+            $_taxType = $this->_getSnelstartTaxClassId($_shippingTaxClassId);
 
-                $this->_products[] = array(
-                    'Type'              => 'Verzendkosten',
-                    'Artikelcode'       => '',
-                    'Artikel'           => array(
-                        'Omschrijving' => html_entity_decode($_order->getShippingDescription()),
-                        'SoortPrijzen' => $this->_getMagentoPriceConfig(),
-                        'Verkoopprijs' => $_order->getShippingAmount(),
-                        'BtwSoort'     => $this->_getSnelstartTaxClassId($_shippingTaxClassId),
-                    ),
-                    'Omschrijving'      => $_order->getShippingDescription(),
-                    'Aantal'            => 1,
-                    'Verkoopprijs'      => $_order->getShippingAmount(),
-                    'BtwBedrag'         => $_order->getShippingTaxAmount(),
-                    'KortingPercentage' => 0,
-                );
-            }
-
-            return $this;
+            $this->_products[] = array(
+                'Type'              => 'Verzendkosten',
+                'Artikelcode'       => '',
+                'Artikel'           => array(
+                    'Omschrijving' => html_entity_decode($_order->getShippingDescription()),
+                    'SoortPrijzen' => $this->_getMagentoPriceConfig(),
+                    'Verkoopprijs' => $_order->getShippingAmount(),
+                    'BtwSoort'     => $_taxType,
+                ),
+                'Omschrijving'      => $_order->getShippingDescription(),
+                'Aantal'            => 1,
+                'Verkoopprijs'      => ($_taxType == 'ExclusiefBtw' ? $_order->getShippingAmount() : $_order->getShippingInclTax()),
+                'BtwBedrag'         => $_order->getShippingTaxAmount(),
+                'KortingPercentage' => 0,
+            );
         }
+
+        return $this;
+    }
 
         private function _addGrandtotal($_order) {
             $this->_products[] = array(
