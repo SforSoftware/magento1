@@ -1,0 +1,15 @@
+{
+  "name": "sforsoftware/magento1",
+  "type": "magento-module",
+  "description": "S-Connect software for Magento 1",
+  "homepage": "https://github.com/SforSoftware/magento1",
+  "license": "OSL-3.0",
+  "authors": [
+    {
+      "name": "SforSoftware"
+    }
+  ],
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*"
+  }
+}
